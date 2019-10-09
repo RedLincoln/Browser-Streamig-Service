@@ -28,6 +28,9 @@ var episodes = document.getElementsByClassName(EPISODES_CLASS)[EPISODE_INDEX_CLA
 var activeEpisode = document.getElementsByClassName(ACTIVE_EPISODE_CLASS)[ACTIVE_EPISODE_INDEX]
 var next = document.getElementsByClassName(NEXT_BUTTON_CLASS)
 
+if (sessionStorage.isStreaming)
+    playVideoFromBeggining()
+
 
 videoPlayer.onended = function(){
     var nextEpisode = getNextEpisodeNumber()
@@ -86,6 +89,7 @@ function changeVideoPlayerContentTo(newEpisode){
 function changePageContentTo(newEpisode){
     var newEpisodeUrl = changeEpisodeNumber(newEpisode, window.location.href)
     window.location.href = newEpisodeUrl
+    sessionStorage.isStreaming = true
 }
 
 function playVideoFromBeggining(){
