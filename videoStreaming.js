@@ -1,4 +1,3 @@
-document.body.style.border = "5px solid blue";
 const EPISODE_INDEX_CLASS = 0
 const VIDEO_PLAYER_CLASS = 'video1_html5_api'
 const NEXT_BUTTON_CLASS = 'anipager-next'
