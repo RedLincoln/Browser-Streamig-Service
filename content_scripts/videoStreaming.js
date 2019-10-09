@@ -32,7 +32,6 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (!(message.isSync == "true")){
         sessionStorage.isStreaming = !isStreaming()
     }
-    console.log(sessionStorage.isStreaming)
     sendResponse({isStreaming: sessionStorage.isStreaming})
 });
 

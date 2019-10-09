@@ -16,7 +16,6 @@ sendMessage()
 function sendStreamingStatus(tabs) {
     
     for (let tab of tabs) {
-        console.log(gettingStorageSetting)
         browser.tabs.sendMessage(
             tab.id,
             { isStreaming: gettingStorageSetting.isStreaming,
