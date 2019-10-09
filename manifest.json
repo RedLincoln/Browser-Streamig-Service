@@ -2,12 +2,30 @@
 
     "manifest_version": 2,
     "name": "4anime-Streaming-Service",
-    "version": "1.0",
-  
+    "version": "1.1",
+
+    "description": "Give 4anime.to page a basic stream service",
+    "icons": {
+      "48": "img/logo48.png"
+    },
+
+    "permissions": [
+      "browsingData",
+      "activeTab",
+      "storage"
+    ],
+
+    "browser_action": {
+      "default_icon": "img/logo32.png",
+      "default_title": "4anime-SS",
+      "default_popup": "popup/4anime_popup.html"
+    },
+
+
     "content_scripts": [
       {
         "matches": ["*://*.4anime.to/*episode*"],
-        "js": ["videoStreaming.js"]
+        "js": ["/content_scripts/videoStreaming.js"]
       }
     ]
   

@@ -28,13 +28,26 @@ var episodes = document.getElementsByClassName(EPISODES_CLASS)[EPISODE_INDEX_CLA
 var activeEpisode = document.getElementsByClassName(ACTIVE_EPISODE_CLASS)[ACTIVE_EPISODE_INDEX]
 var next = document.getElementsByClassName(NEXT_BUTTON_CLASS)
 
-if (sessionStorage.isStreaming)
+browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if (!(message.isSync == "true")){
+        sessionStorage.isStreaming = !isStreaming()
+    }
+    console.log(sessionStorage.isStreaming)
+    sendResponse({isStreaming: sessionStorage.isStreaming})
+});
+
+function isStreaming(){
+    if (sessionStorage.isStreaming && sessionStorage.isStreaming == "true") return true
+    return false
+}
+
+if (isStreaming())
     playVideoFromBeggining()
 
 
 videoPlayer.onended = function(){
     var nextEpisode = getNextEpisodeNumber()
-    if (nextEpisode != parseInt(activeEpisode.innerHTML)){
+    if ((nextEpisode != parseInt(activeEpisode.innerHTML)) && isStreaming()){
         runNewEpisode(nextEpisode)
     }
 };
@@ -89,7 +102,6 @@ function changeVideoPlayerContentTo(newEpisode){
 function changePageContentTo(newEpisode){
     var newEpisodeUrl = changeEpisodeNumber(newEpisode, window.location.href)
     window.location.href = newEpisodeUrl
-    sessionStorage.isStreaming = true
 }
 
 function playVideoFromBeggining(){
