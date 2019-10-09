@@ -10,9 +10,7 @@
     },
 
     "permissions": [
-      "browsingData",
-      "activeTab",
-      "storage"
+      "activeTab"
     ],
 
     "browser_action": {
