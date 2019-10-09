@@ -1,4 +1,12 @@
 document.body.style.border = "5px solid blue";
+const EPISODE_INDEX_CLASS = 0
+const VIDEO_PLAYER_CLASS = 'video1_html5_api'
+const NEXT_BUTTON_CLASS = 'anipager-next'
+const EPISODES_CLASS = 'episodes'
+const ACTIVE_EPISODE_CLASS  = 'active'
+const ACTIVE_EPISODE_INDEX = 2
+const EPISODES_COUNT_OFFSET = 1
+const SOURCE_VIDEO_PLAYER_INDEX = 1
 
 /*
     Existen dos tipos de paginas de episodios con next
@@ -9,45 +17,67 @@ document.body.style.border = "5px solid blue";
             El caso que no enteresa es necesario comprobar que tiene next
 */
 
-var videoPlayer = document.getElementById('video1_html5_api')
+var videoPlayer = document.getElementById(VIDEO_PLAYER_CLASS)
+var videoSrc = videoPlayer.childNodes[SOURCE_VIDEO_PLAYER_INDEX]
+var srcToChange = videoPlayer.getAttribute('src')
+var episodes = document.getElementsByClassName(EPISODES_CLASS)[EPISODE_INDEX_CLASS].childNodes
+var activeEpisode = document.getElementsByClassName(ACTIVE_EPISODE_CLASS)[ACTIVE_EPISODE_INDEX]
+var next = document.getElementsByClassName(NEXT_BUTTON_CLASS)
 
-console.log(localStorage.fullScreen)
-if (localStorage.fullScreen){
-    videoPlayer.requestFullscreen()
+
+function changeEpisodeNumberInSrc(newEpisodeNumber, srcToChange){
+    var patt = new RegExp('([Ee]pisode-)(\\d+)')
+    var validEpisodeNumber = toValidEpisodeNumber(newEpisodeNumber)
+    var newSrc = srcToChange.replace(patt, '$1'+ validEpisodeNumber)
+    return newSrc
 }
 
-var next = document.getElementsByClassName("anipager-next")
-
-var nextEpisodeHref = null
-if (haveNextEpisode(next[0])){
-    nextEpisodeHref = next[0].childNodes[0].getAttribute("href")
-}else{
-    console.log("no next epidose")
+function toValidEpisodeNumber(episodeNumebr){
+    if (episodeNumebr < 10) return '0'+episodeNumebr
+    return episodeNumebr
 }
+
+function getNextEpisodeNumber(){
+    if(hasNewEpisode()) return (parseInt(activeEpisode.innerHTML, 10) + 1)
+    return parseInt(activeEpisode.innerHTML, 10)
+}
+
+function hasNewEpisode(){
+    return parseInt(activeEpisode.innerHTML, 10) < episodes.length - EPISODES_COUNT_OFFSET - EPISODES_COUNT_OFFSET
+}
+
 
 videoPlayer.onended = function(){
-    if (nextEpisodeHref != null){
-        localStorage.fullScreen = true
-        window.location.href = nextEpisodeHref
+    var nextEpisode = getNextEpisodeNumber()
+    if (nextEpisode != parseInt(activeEpisode.innerHTML)){
+        prepareNewEpisode(nextEpisode)
     }
 };
 
-function haveNextEpisode(nextComponent){
-    var content =  nextComponent.innerHTML
-    content = content.trim ?  content.trim() : content.replace(/^\s+/,'')
-    if (content == ''){
-        return false
-    }
-    return true
+function prepareNewEpisode(newEpisode){
+    changeEpisodeTo(newEpisode)
+    playVideoFromBeggining()
+    removeActiveEpisode(parseInt(activeEpisode.innerHTML) - 1 + EPISODES_COUNT_OFFSET)
+    setActiveEpisode(newEpisode - 1 + EPISODES_COUNT_OFFSET)
 }
 
-
-function openFullscreen(elem) {
-    elem.mozRequestFullScreen();
+function playVideoFromBeggining(){
+    videoPlayer.currentTime = 0
+    videoPlayer.play()
 }
 
-function isFullScreen(){
-    return (screen.availHeight || screen.height-30) <= window.innerHeight
+function changeEpisodeTo(episodeNumber){
+    var newSrc = changeEpisodeNumberInSrc(episodeNumber, srcToChange)
+    videoPlayer.src = newSrc
+    videoSrc.src = newSrc
+    videoPlayer.load()
 }
 
+function setActiveEpisode(index){
+    activeEpisode = episodes[index].childNodes[0]
+    activeEpisode.className = "active"
+}
 
+function removeActiveEpisode(index){
+    activeEpisode.removeAttribute('class')
+}
