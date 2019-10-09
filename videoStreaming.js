@@ -1,12 +1,14 @@
 const EPISODE_INDEX_CLASS = 0
 const VIDEO_PLAYER_ID = 'video1_html5_api'
 const VIDEO_DIV_ID = "video1"
+const EPISODE_LABEL_QS = 'span[id="titleleft"]'
 const NEXT_BUTTON_CLASS = 'anipager-next'
 const EPISODES_CLASS = 'episodes'
 const ACTIVE_EPISODE_CLASS  = 'active'
 const ACTIVE_EPISODE_INDEX = 2
 const EPISODES_COUNT_OFFSET = 1
 const SOURCE_VIDEO_PLAYER_INDEX = 1
+const SLEEP_TIME = 5000
 
 /*
     Existen dos tipos de paginas de episodios con next
@@ -17,7 +19,7 @@ const SOURCE_VIDEO_PLAYER_INDEX = 1
             El caso que no enteresa es necesario comprobar que tiene next
 */
 
-var isFullScreen = false
+var episodeLabel = document.querySelector(EPISODE_LABEL_QS)
 var videoPlayer = document.getElementById(VIDEO_PLAYER_ID)
 var videoDiv = document.getElementById(VIDEO_DIV_ID)
 var videoSrc = videoPlayer.childNodes[SOURCE_VIDEO_PLAYER_INDEX]
@@ -34,6 +36,14 @@ videoPlayer.onended = function(){
     }
 };
 
+function changeLabelTo(newEpisode){
+    var validEpisodeNumber = toValidEpisodeNumber(newEpisode)
+    episodeLabel.innerHTML = "Episode " + validEpisodeNumber
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 function changeEpisodeNumber(newEpisodeNumber, srcToChange){
     var patt = new RegExp('([Ee]pisode-)(\\d+)')
@@ -56,7 +66,8 @@ function hasNewEpisode(){
     return parseInt(activeEpisode.innerHTML, 10) < episodes.length - EPISODES_COUNT_OFFSET - EPISODES_COUNT_OFFSET
 }
 
-function runNewEpisode(newEpisode){
+async function runNewEpisode(newEpisode){
+    await sleep(SLEEP_TIME)
     if (document.fullscreenElement == videoDiv){
         changeVideoPlayerContentTo(newEpisode)
     }else {
@@ -69,6 +80,7 @@ function changeVideoPlayerContentTo(newEpisode){
     playVideoFromBeggining()
     removeActiveEpisode(parseInt(activeEpisode.innerHTML) - 1 + EPISODES_COUNT_OFFSET)
     setActiveEpisode(newEpisode - 1 + EPISODES_COUNT_OFFSET)
+    changeLabelTo(newEpisode)
 }
 
 function changePageContentTo(newEpisode){
