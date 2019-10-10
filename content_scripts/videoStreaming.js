@@ -8,7 +8,7 @@ const ACTIVE_EPISODE_CLASS  = 'active'
 const ACTIVE_EPISODE_INDEX = 2
 const EPISODES_COUNT_OFFSET = 1
 const SOURCE_VIDEO_PLAYER_INDEX = 1
-const SLEEP_TIME = 5000
+const SLEEP_TIME = 1000
 
 /*
     Existen dos tipos de paginas de episodios con next
@@ -27,26 +27,66 @@ var srcToChange = videoPlayer.getAttribute('src')
 var episodes = document.getElementsByClassName(EPISODES_CLASS)[EPISODE_INDEX_CLASS].childNodes
 var activeEpisode = document.getElementsByClassName(ACTIVE_EPISODE_CLASS)[ACTIVE_EPISODE_INDEX]
 var next = document.getElementsByClassName(NEXT_BUTTON_CLASS)
+var openingJumpDone = "false"
+var endingJumpDone = "false"
+
 
 browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    if (!(message.isSync == "true")){
-        sessionStorage.isStreaming = !isStreaming()
+    if (message.command == "streaming"){
+        sessionStorage.isStreaming = !isHappening(sessionStorage.isStreaming)
+    }else if (message.command == "opening"){
+        sessionStorage.skipOpening = !isHappening(sessionStorage.skipOpening)
+        if (sessionStorage.skipOpening){
+            sessionStorage.openingStart = 120
+            sessionStorage.openingEnd = 210
+        }
+    }else if (message.command == "ending"){
+        sessionStorage.skipEnding = !isHappening(sessionStorage.skipEnding)
+        sessionStorage.endingStart = 1340
+        sessionStorage.endingEnd = videoPlayer.duration - 1
     }
-    sendResponse({isStreaming: sessionStorage.isStreaming})
+    sendResponse({
+        isStreaming: sessionStorage.isStreaming,
+        skipOpening: sessionStorage.skipOpening,
+        skipEnding : sessionStorage.skipEnding
+        
+    })
 });
 
-function isStreaming(){
-    if (sessionStorage.isStreaming && sessionStorage.isStreaming == "true") return true
+function isHappening(action){
+    if (action && action == "true") return true
     return false
 }
 
-if (isStreaming())
+if (isHappening(sessionStorage.isStreaming))
     playVideoFromBeggining()
 
+videoPlayer.ontimeupdate =  function(){
+    if (sessionStorage.openingStart &&
+        ((videoPlayer.currentTime + 0.25) > parseInt(sessionStorage.openingStart)) && 
+        ((videoPlayer.currentTime - 0.25) < parseInt(sessionStorage.openingEnd)) &&
+        !isHappening(openingJumpDone)){
+
+        videoPlayer.currentTime = parseInt(sessionStorage.openingEnd)
+        videoPlayer.play()
+        openingJumpDone = "true"
+    }
+
+    if (sessionStorage.endingStart &&
+        ((videoPlayer.currentTime + 0.25) > parseInt(sessionStorage.endingStart)) && 
+        ((videoPlayer.currentTime - 0.25) > parseInt(sessionStorage.endingEnd)) && 
+        !isHappening(endingJumpDone)){
+
+        videoPlayer.currentTime = parseInt(sessionStorage.endingEnd) 
+        videoPlayer.play()   
+        endingJumpDone = "true"
+    }
+
+}
 
 videoPlayer.onended = function(){
     var nextEpisode = getNextEpisodeNumber()
-    if ((nextEpisode != parseInt(activeEpisode.innerHTML)) && isStreaming()){
+    if ((nextEpisode != parseInt(activeEpisode.innerHTML)) && isHappening(sessionStorage.isStreaming)){
         runNewEpisode(nextEpisode)
     }
 };
