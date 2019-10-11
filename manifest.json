@@ -1,4 +1,4 @@
-{
+  {
 
     "manifest_version": 2,
     "name": "4anime-Streaming-Service",
@@ -23,9 +23,12 @@
     "content_scripts": [
       {
         "matches": ["*://*.4anime.to/*episode*"],
-        "js": ["/content_scripts/videoStreaming.js",
-               "/content_scripts/videoEndedControl.js"]
+        "js": ["/content_scripts/loadVideoButtonCss.js",
+               "/content_scripts/videoStreaming.js",
+               "/content_scripts/videoEndedControl.js"
+              ],
+        "all_frames": true
+
       }
     ]
-  
   }

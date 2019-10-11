@@ -5,6 +5,8 @@ var endingStart = document.getElementById("endingFrom");
 var endingEnd = document.getElementById("endingTo");
 var openingStart = document.getElementById("endingFrom");
 var openingEnd = document.getElementById("endingTo");
+var syncPorperties = ["isStreaming", "command" ,"isSkipingOpening", "isSkipingEnding", "openingStart",
+                      "openingEnd", "endingStart", "endingEnd"];
 
 var defaultSettings = {
     isStreaming: "false",
@@ -44,7 +46,7 @@ function sendStreamingStatus(tabs) {
                 data: settings
             }
         ).then(response => {
-            if (response.command == "sync"){
+            if (settings.command == "sync"){
                 syncContentAndBackground(response);             
             }
         }).catch(onError);

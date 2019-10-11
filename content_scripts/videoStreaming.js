@@ -1,28 +1,32 @@
 var VIDEO_PLAYER_ID = 'video1_html5_api';
-var VIDEO_DIV_ID = "video1";
 var SLEEP_TIME = 1000;
+var MESSAGE_TIME = 20;
 var STREAMING = "streaming";
 var OPENING = "opening";
 var ENDING = "ending";
 var SYNC = "sync";
-
+var syncPorperties = ["isStreaming","isSkipingOpening", "isSkipingEnding", "openingStart",
+                      "openingEnd", "endingStart", "endingEnd"];
 
 var videoPlayer = document.getElementById(VIDEO_PLAYER_ID);
-var videoDiv = document.getElementById(VIDEO_DIV_ID);
-var openingJumpDone = "false";
-var endingJumpDone = "false";
+var video_button_div = document.getElementById("video_button_div");
+var video_button = document.getElementById("video_button");
+
+/*video_button.onclick = function(){
+    videoPlayer.currentTime = sessionStorage.skipTime
+}*/
 
 
 function onMessageListener (message, sender, sendResponse) {
-    if (isStreaming(message.data.command)){
-        changeStreaming();
-    }else if (isSkipingOpening(message.data.command)){
-        changeSkipOpening();
+    if (isSync(message.data.command)){
+        var data = extractSyncPropertiesFrom(sessionStorage);
+        sendResponse(data);    
+    }else if(isStreaming(message.data.command)){
+        changeStreaming()
+    }else if(isSkipingOpening(message.data.command)){
+        changeSkipOpening()
     }else if (isSkipingEnding(message.data.command)){
         changeSkipEnding();
-    }else if (isSync(message.data.command)){
-        var data = syncData();
-        sendResponse(data);    
     }
 
     function changeStreaming(){
@@ -41,8 +45,17 @@ function onMessageListener (message, sender, sendResponse) {
         sessionStorage.endingEnd = videoPlayer.duration;
     }
 
-    function syncData(){
-        return Object.assign(message.data, sessionStorage); 
+    function extractSyncPropertiesFrom(source){
+        var result = {};
+        var i;
+        for (i = 0; i < syncPorperties.length; i++){
+            result[syncPorperties[i]] = source[syncPorperties[i]];
+        }
+        return result;
+    }
+
+    function isSync(command){
+        return command === SYNC;
     }
 
     function isStreaming(command){
@@ -57,27 +70,36 @@ function onMessageListener (message, sender, sendResponse) {
         return command === ENDING;
     }
 
-    function isSync(command){
-        return command === SYNC;
-    }
 
 }
 
 browser.runtime.onMessage.addListener(onMessageListener);
 
 videoPlayer.ontimeupdate =  function(){
-    //console.log(sessionStorage)
     if (canSkipOpening()){
         videoPlayer.currentTime = parseInt(sessionStorage.openingEnd);
         videoPlayer.play();
-        openingJumpDone = "true";
-    }
-
-    if (canSkipEnding()){
-
+    }else if(canSkipEnding()){
         videoPlayer.currentTime = parseInt(sessionStorage.endingEnd);
         videoPlayer.play();   
-        endingJumpDone = "true";
+    }else if (askForOpeningSkip() && video_button_div.style.display == "none"){
+        showVideoButtonWith("Skip Opening");
+        sessionStorage.skipTime = sessionStorage.openingEnd;
+    }else if (askForEndingSkip() && video_button_div.style.display == "none"){
+        showVideoButtonWith("Skip Ending");
+        sessionStorage.skipTime = sessionStorage.endingEnd;
+    }else if (!askForOpeningSkip() && !askForEndingSkip()){
+        hideVideoButton();
+    }
+
+    function askForOpeningSkip(){
+        return (videoPlayer.currentTime > parseInt(sessionStorage.openingStart)) && 
+               (videoPlayer.currentTime < parseInt(sessionStorage.openingStart) + MESSAGE_TIME);
+    }
+
+    function askForEndingSkip(){
+        return (videoPlayer.currentTime > parseInt(sessionStorage.endingStart)) && 
+               (videoPlayer.currentTime < parseInt(sessionStorage.endingStart) + MESSAGE_TIME);
     }
 
     function canSkipOpening(){
@@ -93,6 +115,17 @@ videoPlayer.ontimeupdate =  function(){
     }
 
 };
+
+function showVideoButtonWith(message){
+    video_button.innerHTML = message;
+    video_button.style.display = "block";
+    video_button_div.style.display = "block";
+}
+
+function hideVideoButton(){
+    video_button.style.display = "none";
+    video_button_div.style.display = "none";
+}
 
 function toBool(string){
     return (string == "true");
