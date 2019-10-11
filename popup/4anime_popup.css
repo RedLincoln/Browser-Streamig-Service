@@ -1,6 +1,6 @@
-html, body {
+body {
     width: 300px;
-}
+}		
 
 .hidden {
     display: none;

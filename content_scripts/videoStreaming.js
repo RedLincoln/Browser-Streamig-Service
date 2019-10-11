@@ -63,6 +63,7 @@ function onMessageListener (message, sender, sendResponse) {
         sessionStorage.isSkipingEnding = !toBool(sessionStorage.isSkipingEnding);
         sessionStorage.endingStart = 1340;
         sessionStorage.endingEnd = videoPlayer.duration;
+        console.log(videoPlayer.duration)
     }
 
     function syncData(){
@@ -108,17 +109,15 @@ videoPlayer.ontimeupdate =  function(){
     }
 
     function canSkipOpening(){
-        return to(sessionStorage.isSkipingOpening) &&
+        return toBool(sessionStorage.isSkipingOpening) &&
                (videoPlayer.currentTime > parseInt(sessionStorage.openingStart)) && 
-               (videoPlayer.currentTime < parseInt(sessionStorage.openingEnd)) &&
-               !toBool(openingJumpDone);
+               (videoPlayer.currentTime < parseInt(sessionStorage.openingEnd));
     }
 
     function canSkipEnding(){
         return toBool(sessionStorage.isSkipingEnding) &&
                (videoPlayer.currentTime > parseInt(sessionStorage.endingStart)) && 
-               (videoPlayer.currentTime > parseInt(sessionStorage.endingEnd)) && 
-               !toBool(endingJumpDone);
+               (videoPlayer.currentTime < parseInt(sessionStorage.endingEnd));
     }
 
 };
