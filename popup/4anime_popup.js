@@ -1,11 +1,10 @@
-var streamingCB = document.getElementById("streamingCB")
-var skipOpeningCB = document.getElementById("openingActive")
-var skipEndingCB = document.getElementById("endingActive")
-console.log(skipEndingCB)
-var endingStart = document.getElementById("endingFrom")
-var endingEnd = document.getElementById("endingTo")
-var openingStart = document.getElementById("endingFrom")
-var openingEnd = document.getElementById("endingTo")
+var streamingCB = document.getElementById("streamingCB");
+var skipOpeningCB = document.getElementById("openingActive");
+var skipEndingCB = document.getElementById("endingActive");
+var endingStart = document.getElementById("endingFrom");
+var endingEnd = document.getElementById("endingTo");
+var openingStart = document.getElementById("endingFrom");
+var openingEnd = document.getElementById("endingTo");
 
 var defaultSettings = {
     isStreaming: "false",
@@ -16,54 +15,50 @@ var defaultSettings = {
     openingEnd: "empty",
     endingStart: "empty",
     endingEnd: "empty"
-}
+};
 
-var gettingStorageSetting = defaultSettings
+var settings = null
+
+loadSettings();
+
+function loadSettings(){
+    settings = Object.assign(
+        defaultSettings, 
+        settings
+    );
+}
 
 function onError(error) {
-    console.error(`Error: ${error}`);
+    console.error('Error: ' + error);
 }
 
-sendMessage()
+sendMessage();
 
 function sendStreamingStatus(tabs) {
     
-    for (let tab of tabs) {
+    tabs.forEach( tab => {
         browser.tabs.sendMessage(
             tab.id,
             { 
-                isStreaming: gettingStorageSetting.isStreaming,
-                command : gettingStorageSetting.command,
-                skipOpening: gettingStorageSetting.skipOpening,
-                skipEnding: gettingStorageSetting.skipEnding,
-                openingStart: gettingStorageSetting.openingStart,
-                openingEnd: gettingStorageSetting.openingEnd,
-                endingStart: gettingStorageSetting.endingStart,
-                endingEnd: gettingStorageSetting.endingEnd
+                data: settings
             }
         ).then(response => {
-            gettingStorageSetting.isStreaming = response.isStreaming
-            gettingStorageSetting.skipOpening = response.skipOpening
-            gettingStorageSetting.skipEnding = response.skipEnding
-            gettingStorageSetting.endingStart = response.value
-            gettingStorageSetting.endingEnd = response.value
-            gettingStorageSetting.endingStart = response.value
-            gettingStorageSetting.endingEnd = response.value
-            if (gettingStorageSetting.command == "sync"){
-                syncContentAndBackground()                
+            if (response.command == "sync"){
+                syncContentAndBackground(response);             
             }
         }).catch(onError);
+    });
+
+    function syncContentAndBackground(response){
+        streamingCB.checked = toBool(response.isStreaming);
+        skipOpeningCB.checked = toBool(response.isSkipingOpening);
+        skipEndingCB.checked = toBool(response.isSkipingEnding);
     }
 }
 
-function syncContentAndBackground(){
-    streamingCB.checked = toBool(gettingStorageSetting.isStreaming)
-    skipOpeningCB.checked = toBool(gettingStorageSetting.skipOpening)
-    skipEndingCB.checked = toBool(gettingStorageSetting.skipEnding)
-}
 
 function toBool(stringBool){
-    return stringBool == "true"
+    return (stringBool == "true" );
 }
 
 function sendMessage(){
@@ -74,22 +69,23 @@ function sendMessage(){
 }
 
 skipOpeningCB.onclick = function(){
-    gettingStorageSetting.command = "opening"
-    gettingStorageSetting.skipEnding = skipOpeningCB.checked
-    gettingStorageSetting.endingStart = openingStart.value
-    gettingStorageSetting.endingEnd = openingEnd.value        
-    sendMessage() 
-}
+    settings.command = "opening";
+    settings.isSkipingOpening = skipOpeningCB.checked;
+    settings.endingStart = openingStart.value;
+    settings.endingEnd = openingEnd.value;        
+    sendMessage(); 
+};
 
 skipEndingCB.onclick = function(){
-    gettingStorageSetting.command = "ending"
-    gettingStorageSetting.skipEnding = skipEndingCB.checked
-    gettingStorageSetting.endingStart = endingStart.value
-    gettingStorageSetting.endingEnd = endingEnd.value
-    sendMessage() 
-}
+    settings.command = "ending";
+    settings.isSkipingEnding = skipEndingCB.checked;
+    settings.endingStart = endingStart.value;
+    settings.endingEnd = endingEnd.value;
+    sendMessage();
+};
 
 streamingCB.onclick = function (){
-    gettingStorageSetting.command = "streaming"
-    sendMessage() 
-}
+    settings.isStreaming = streamingCB.checked;
+    settings.command = "streaming";
+    sendMessage(); 
+};
