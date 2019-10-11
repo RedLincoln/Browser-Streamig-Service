@@ -23,7 +23,8 @@
     "content_scripts": [
       {
         "matches": ["*://*.4anime.to/*episode*"],
-        "js": ["/content_scripts/videoStreaming.js"]
+        "js": ["/content_scripts/videoStreaming.js",
+               "/content_scripts/videoEndedControl.js"]
       }
     ]
   

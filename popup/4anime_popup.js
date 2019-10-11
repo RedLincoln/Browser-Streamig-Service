@@ -17,7 +17,8 @@ var defaultSettings = {
     endingEnd: "empty"
 };
 
-var settings = null
+
+var settings = null;
 
 loadSettings();
 
