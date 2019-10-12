@@ -2,7 +2,11 @@
 function clockFormatToSeconds(time) {
 	var value = parseInt(time);
 
-	if (time.length >= 3 || typeof time !== 'string' || isNaN(time) || time.trim().length === 0 || value < 0 || value > 60){
+	var isString = typeof time === 'string';
+	var inRange = value >= 0 && value <= 60;
+	var inMaxLength = time.length < 3
+	
+	if ( !inMaxLength || !isString || isNaN(time) || time.trim().length === 0 || !inRange ){
 		throw new Error('Bad input');
 	}
 	
