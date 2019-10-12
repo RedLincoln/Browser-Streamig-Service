@@ -68,7 +68,13 @@ test('field input must must be positive', () => {
  	}).toThrow('Bad input');
 });
 
+test('seconds input must must be less or equal to 60', () => {
+ 	var input = '61';
 
+ 	expect(() => {
+ 		clockFormatToSeconds(input);
+ 	}).toThrow('Bad input');
+});
 
 
 
