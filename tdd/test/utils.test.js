@@ -1,6 +1,6 @@
 var clockFormatToSeconds = require('../src/utils.js');
 
-test('seconds units must be well calculated', () => {
+test('field units must be well calculated', () => {
  	var input = '1';
 
  	var result = clockFormatToSeconds(input);
@@ -9,7 +9,7 @@ test('seconds units must be well calculated', () => {
 });
 
 
-test('seconds tens must be well calculated', () => {
+test('field tens must be well calculated', () => {
  	var input = '10';
 
  	var result = clockFormatToSeconds(input);
@@ -18,7 +18,7 @@ test('seconds tens must be well calculated', () => {
 });
 
 
-test('seconds hundreds or more must couse an Error', () => {
+test('field hundreds or more must couse an Error', () => {
  	var input = '100';
 
  	expect(() => {
@@ -26,7 +26,7 @@ test('seconds hundreds or more must couse an Error', () => {
  	}).toThrow('Bad input');
 });
 
-test('seconds input must be a string', () => {
+test('field input must be a string', () => {
  	var input = true;
 
  	expect(() => {
@@ -34,7 +34,7 @@ test('seconds input must be a string', () => {
  	}).toThrow('Bad input');
 });
 
-test('seconds input must contain only integer(s)', () => {
+test('field input must contain only integer(s)', () => {
  	var input = 'tr';
 
  	expect(() => {
@@ -43,7 +43,7 @@ test('seconds input must contain only integer(s)', () => {
 });
 
 
-test('seconds input empty must couse an Error', () => {
+test('field input empty must couse an Error', () => {
  	var input = '';
 
  	expect(() => {
@@ -52,14 +52,13 @@ test('seconds input empty must couse an Error', () => {
 });
 
 
-test('seconds input spaces must couse an Error', () => {
+test('field input spaces must couse an Error', () => {
  	var input = '  ';
 
  	expect(() => {
  		clockFormatToSeconds(input);
  	}).toThrow('Bad input');
 });
-
 
 
 
