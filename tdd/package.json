@@ -1,0 +1,18 @@
+{
+  "scripts": {
+    "test": "jest"
+  },
+  "name": "tdd",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {},
+  "devDependencies": {
+    "jest": "^24.9.0"
+  }
+}
