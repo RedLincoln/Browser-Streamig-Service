@@ -4,16 +4,25 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function isValidStartEndTime(opening, ending) {
-	if (isNaN(opening)) opening = timeFormatToSeconds(opening);
-	if (isNaN(ending)) ending = timeFormatToSeconds(ending);
-	return opening !== null && ending !==  null && ending > opening;
+function buttonIsDisable(){
+    return video_button_div.style.display == "none";
+}
+
+function inVideoRange(value){
+	return value >= 0 && value <= videoPlayer.duration;
+}
+
+function isValidStartEndTime(start, end) {
+	if (isNaN(start)) start = timeFormatToSeconds(start);
+	if (isNaN(end)) end = timeFormatToSeconds(end);
+	return start !== null && end !==  null && end > start &&
+		   inVideoRange(start) && inVideoRange(end);
 }
 
 
 function isValidTimeFormat(time){
 	var segments = time.split(":");
-	if (segments.length > 3) return false;
+	if (segments.length > 2) return false;
 	segments.forEach ( segment => {
 		if (isNaN(segment)) return false;
 	});
@@ -25,21 +34,24 @@ function timeFormatToSeconds (time) {
 		console.error("Error: Invalid Time Format (" + time + ") expecting hh:mm:ss as Integers");
 		return null;
 	}
-
 	var segments = time.split(":");
 	
 	var result = 0;
-	var ratio = [24*60, 60, 1];
+	var ratio = [60, 1];
+	var baseIndex = ratio.length - segments.length;
 	var i;
 	for (i = 0; i < segments.length; i++){
-		result += parseInt(segments[i])*ratio[i];
+		var ratioIndex = baseIndex + i;
+		result += parseInt(segments[i])*ratio[ratioIndex];
 	}
-
-	return ratio;
+	console.log(result);
+	return result;
 }
 
 function toBool(string){
-    return (string == "true");
+	if (typeof string === 'boolean') return string
+	if (typeof string === 'string') return string == "true"
+    return false;
 }
 
 function showVideoButtonWith(message){

@@ -8,7 +8,7 @@ var timeControl = {
     },
 
     skipTime: function(){
-        videoPlayer.currentTime = sessionStorage.skipTime
+        videoPlayer.currentTime = sessionStorage.skipTime;
     },
 
     actionControl: function(){
@@ -16,9 +16,9 @@ var timeControl = {
             timeControl.skipOpeningWithoutAsking();
         }else if(timeControl.canSkipEnding()){
             timeControl.skipEndingWithoutAsking();
-        }else if (timeControl.isInOpeningSkipMessageRange() && timeControl.buttonIsDisable()){
+        }else if (timeControl.isInOpeningSkipMessageRange() && buttonIsDisable()){
             timeControl.askForOpeningSkip();
-        }else if (timeControl.isInEndingSkipMessageRange() && timeControl.buttonIsDisable()){
+        }else if (timeControl.isInEndingSkipMessageRange() && buttonIsDisable()){
             timeControl.askForEndingSkip();
         }else if (!timeControl.isInOpeningSkipMessageRange() && !timeControl.isInEndingSkipMessageRange()){
             hideVideoButton();
@@ -43,10 +43,6 @@ var timeControl = {
     askForEndingSkip: function(){
         showVideoButtonWith("Skip Ending");
         sessionStorage.skipTime = sessionStorage.endingEnd;
-    },
-
-    buttonIsDisable: function(){
-        return video_button_div.style.display == "none";
     },
 
     isInOpeningSkipMessageRange: function(){

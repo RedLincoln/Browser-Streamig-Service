@@ -10,6 +10,7 @@
 
 <body class="well mt-3 ml-3 mb-3">
     <div class="container">
+        <p id="note" class="form-control-sm"><b>Note:</b>There is not control over the values</p>
         <hr>
         <div class="mb-1 custom-control custom-checkbox">
                 <input id="openingActive" type="checkbox" class="custom-control-input">
@@ -30,24 +31,18 @@
             </div>
         </div>
         <hr>
-        <div class="mb-1 custom-control custom-checkbox">
+        <div class="mx-auto row">
+            <div class="custom-control custom-checkbox">
                 <input id="endingActive" type="checkbox" class="custom-control-input">
                 <label class="custom-control-label" for="endingActive">Skip Ending</label>
-        </div>
-        <div class="row">
-                <div class="ml-1 col-xs-6 form-group row">
-                    <label for="endingFrom" class="col-xs-3 mr-1 col-form-label form-control-sm">From: </label>
-                    <div class="col-xs-8">
-                        <input type="text" class="form-control form-control-sm" size="6" id="endingFrom" value="22:20">
-                    </div>
-                </div>
-                <div class="mx-auto col-xs-6 form-group row">
-                    <label for="endingTo" class="col-xs-3 mr-1 col-form-label form-control-sm">To: </label>
-                    <div class="col-xs-8">
-                        <input type="text" class="form-control form-control-sm" size="6" id="endingTo" value="23:00">
-                    </div>
+            </div>   
+            <div class="mx-auto col-xs-6 form-group row">
+                <label for="endingFrom" class="col-xs-3 mr-1 col-form-label form-control-sm">Starts: </label>
+                <div class="col-xs-8">
+                     <input type="text" class="form-control form-control-sm" size="6" id="endingFrom" value="22:20">
                 </div>
             </div>
+        </div>
         <hr>
         <div class="custom-control custom-checkbox">
             <input id="streamingCB" type="checkbox" class="custom-control-input">

@@ -1,10 +1,10 @@
+var TOP_SEGMENT_VALUE = 60;
 var streamingCB = document.getElementById("streamingCB");
 var skipOpeningCB = document.getElementById("openingActive");
 var skipEndingCB = document.getElementById("endingActive");
 var endingStart = document.getElementById("endingFrom");
-var endingEnd = document.getElementById("endingTo");
-var openingStart = document.getElementById("endingFrom");
-var openingEnd = document.getElementById("endingTo");
+var openingStart = document.getElementById("openingFrom");
+var openingEnd = document.getElementById("openingTo");
 var syncPorperties = ["isStreaming", "command" ,"isSkipingOpening", "isSkipingEnding", "openingStart",
                       "openingEnd", "endingStart", "endingEnd"];
 
@@ -15,8 +15,7 @@ var defaultSettings = {
     isSkipingEnding: "false",
     openingStart: "empty",
     openingEnd: "empty",
-    endingStart: "empty",
-    endingEnd: "empty"
+    endingStart: "empty"
 };
 
 
@@ -74,8 +73,8 @@ function sendMessage(){
 skipOpeningCB.onclick = function(){
     settings.command = "opening";
     settings.isSkipingOpening = skipOpeningCB.checked;
-    settings.endingStart = openingStart.value;
-    settings.endingEnd = openingEnd.value;        
+    settings.openingStart = openingStart.value;
+    settings.openingEnd = openingEnd.value;        
     sendMessage(); 
 };
 
@@ -83,7 +82,6 @@ skipEndingCB.onclick = function(){
     settings.command = "ending";
     settings.isSkipingEnding = skipEndingCB.checked;
     settings.endingStart = endingStart.value;
-    settings.endingEnd = endingEnd.value;
     sendMessage();
 };
 
@@ -92,3 +90,4 @@ streamingCB.onclick = function (){
     settings.command = "streaming";
     sendMessage(); 
 };
+

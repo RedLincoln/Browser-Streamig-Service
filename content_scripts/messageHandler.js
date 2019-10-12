@@ -13,9 +13,9 @@ var messageControl = {
         }else if(messageControl.isStreaming(message.data.command)){
             messageControl.changeStreaming();
         }else if(messageControl.isSkipingOpening(message.data.command)){
-            messageControl.changeSkipOpening();
+            messageControl.changeSkipOpening(message.data);
         }else if (messageControl.isSkipingEnding(message.data.command)){
-            messageControl.changeSkipEnding();
+            messageControl.changeSkipEnding(message.data);
         }
     },
 
@@ -23,16 +23,20 @@ var messageControl = {
         sessionStorage.isStreaming = !toBool(sessionStorage.isStreaming);
     },
 
-    changeSkipOpening: function(){
-        sessionStorage.isSkipingOpening = !toBool(sessionStorage.isSkipingOpening);
-        sessionStorage.openingStart = 120;
-        sessionStorage.openingEnd = 210;
+    changeSkipOpening: function(data){
+        sessionStorage.isSkipingOpening = toBool(data.isSkipingOpening);
+        if (toBool(sessionStorage.isSkipingOpening)){
+            sessionStorage.openingStart = timeFormatToSeconds(data.openingStart);
+            sessionStorage.openingEnd = timeFormatToSeconds(data.openingEnd);
+        }
     },
 
-    changeSkipEnding: function(){
+    changeSkipEnding: function(data){
         sessionStorage.isSkipingEnding = !toBool(sessionStorage.isSkipingEnding);
-        sessionStorage.endingStart = 1340;
-        sessionStorage.endingEnd = videoPlayer.duration;
+        if (toBool(sessionStorage.isSkipingEnding)){
+            sessionStorage.endingStart = timeFormatToSeconds(data.endingStart);
+            sessionStorage.endingEnd = videoPlayer.duration;
+        }
     },
 
     extractSyncPropertiesFrom: function(source){

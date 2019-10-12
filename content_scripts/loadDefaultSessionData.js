@@ -2,10 +2,10 @@ console.log("loadDefaultSessionData.js");
 
 var loadData = {
 
-	defaultOpeningStart : 120,
-	defaultOpeningEnd: 210,
-	defaultEndingStart: 1340,
-	defaultEndingEnd: 1430,
+	defaultOpeningStart : timeFormatToSeconds("2:00"),
+	defaultOpeningEnd: timeFormatToSeconds("3:30"),
+	defaultEndingStart: timeFormatToSeconds("22:20"),
+	defaultEndingEnd: videoPlayer.duration,
 	defaultIsStreaming: true,
 	defaultIsSkipingOpening: false,
 	defaultIsSkipingEnding: false,
@@ -28,7 +28,7 @@ var loadData = {
             sessionStorage.endingStart = this.defaultEndingStart;
             sessionStorage.endingEnd = this.defaultEndingEnd;
         }
-        
+
         if (typeof sessionStorage.isStreaming === 'undefined') {
         	sessionStorage.isStreaming = this.defaultIsStreaming;
         }
