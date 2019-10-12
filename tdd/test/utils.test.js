@@ -52,3 +52,14 @@ test('seconds input empty must couse an Error', () => {
 });
 
 
+test('seconds input spaces must couse an Error', () => {
+ 	var input = '  ';
+
+ 	expect(() => {
+ 		clockFormatToSeconds(input);
+ 	}).toThrow('Bad input');
+});
+
+
+
+
