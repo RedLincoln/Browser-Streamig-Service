@@ -76,5 +76,13 @@ test('seconds input must must be less or equal to 60', () => {
  	}).toThrow('Bad input');
 });
 
+test('minutes:seconds must be well calculated', () => {
+ 	var input = '0:60';
+
+ 	var result = clockFormatToSeconds(input);
+ 	
+ 	expect(result).toBe(60);
+});
+
 
 
