@@ -35,7 +35,7 @@ test('field input must be a string', () => {
 });
 
 test('field input must contain only integer(s)', () => {
- 	var input = 'tr';
+ 	var input = '4r';
 
  	expect(() => {
  		clockFormatToSeconds(input);
@@ -59,6 +59,7 @@ test('field input spaces must couse an Error', () => {
  		clockFormatToSeconds(input);
  	}).toThrow('Bad input');
 });
+
 
 
 
