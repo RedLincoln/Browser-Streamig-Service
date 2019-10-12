@@ -60,6 +60,15 @@ test('field input spaces must couse an Error', () => {
  	}).toThrow('Bad input');
 });
 
+test('field input must must be positive', () => {
+ 	var input = '-1';
+
+ 	expect(() => {
+ 		clockFormatToSeconds(input);
+ 	}).toThrow('Bad input');
+});
+
+
 
 
 
