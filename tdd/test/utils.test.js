@@ -85,4 +85,11 @@ test('minutes:seconds must be well calculated', () => {
 });
 
 
+test('minutes:seconds seperator must be a column', () => {
+ 	var input = '0,60';
+
+ 	expect(() => {
+ 		clockFormatToSeconds(input);
+ 	}).toThrow('Bad input');
+});
 
