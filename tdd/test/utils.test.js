@@ -43,4 +43,12 @@ test('seconds input must contain only integer(s)', () => {
 });
 
 
+test('seconds input empty must couse an Error', () => {
+ 	var input = '';
+
+ 	expect(() => {
+ 		clockFormatToSeconds(input);
+ 	}).toThrow('Bad input');
+});
+
 

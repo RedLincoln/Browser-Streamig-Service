@@ -1,6 +1,6 @@
 
 function clockFormatToSeconds(time) {
-	if (time.length >= 3 || typeof time !== 'string'){
+	if (time.length >= 3 || typeof time !== 'string' || isNaN(time) || time.length === 0){
 		throw new Error('Bad input');
 	}
 	var value = parseInt(time);
