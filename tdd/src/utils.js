@@ -2,6 +2,7 @@
 function clockFormatToSeconds(time) {
 	if (typeof time !== 'string') throwBadInput();
 	var fields = time.split(":");
+	if (fields.length > 2) throwBadInput();
 
 	fields.forEach (field => {
 		if ( !isValidField(field))

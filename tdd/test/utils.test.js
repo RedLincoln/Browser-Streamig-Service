@@ -93,3 +93,12 @@ test('minutes:seconds seperator must be a column', () => {
  	}).toThrow('Bad input');
 });
 
+test('must throw an Error wiht three or more fields', ()=>{
+	var input = '0:0:60';
+
+ 	expect(() => {
+ 		clockFormatToSeconds(input);
+ 	}).toThrow('Bad input');
+});
+
+
