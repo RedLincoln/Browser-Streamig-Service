@@ -27,7 +27,9 @@
         "matches": ["*://*.4anime.to/*episode*"],
         "js": ["./content_scripts/src/loadGlobalVariables.js",
                "./content_scripts/src/utils.js",
-               "./content_scripts/src/messageHandler.js"
+               "./content_scripts/src/loadDefaultSessionData.js",
+               "./content_scripts/src/messageHandler.js",
+               "./content_scripts/src/videoEndedControl.js"
               ],
         "all_frames": true
 
