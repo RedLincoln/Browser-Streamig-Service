@@ -24,8 +24,9 @@ function throwBadInput(){
 }
 
 function isValidField(field){
+	var value  =  parseInt(field);
 	var isString = typeof field === 'string';
-	var inRange = field >= '0' && field <= '59';
+	var inRange = value >= 0 && value <= 59;
 	var inMaxLength = field.length < 3
 	var emptyField = field.trim().length === 0;
 
