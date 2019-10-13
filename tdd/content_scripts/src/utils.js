@@ -55,6 +55,21 @@ function toBool(input){
 	return false;
 }
 
+function showVideoButtonWith(message){
+    video_button.innerHTML = message;
+    video_button.style.display = "block";
+    video_button_div.style.display = "block";
+}
+
+function hideVideoButton(){
+    video_button.style.display = "none";
+    video_button_div.style.display = "none";
+}
+
+function buttonIsDisable(){
+    return video_button_div.style.display === "none";
+}
+
 /*
 module.exports.digitalClockToSeconds = digitalClockToSeconds;
 module.exports.toBool = toBool;

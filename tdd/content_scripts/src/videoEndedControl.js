@@ -1,4 +1,5 @@
 console.log('loading videoEndedControl.js');
+console.log(sessionStorage)
 
 var videoControl = {
 
