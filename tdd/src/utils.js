@@ -36,6 +36,7 @@ function isValidField(field){
 
 
 function toBool(input){
+	if (typeof input === 'string') return input === 'true'
 	return input;
 }
 

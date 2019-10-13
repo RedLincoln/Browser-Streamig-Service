@@ -9,4 +9,13 @@ describe("toBool must return true when", () => {
 
 		expect(result).toEqual(true);
 	});
+
+	test("input is true string", () =>{
+		var input = "true";
+
+		var result = toBool(input);
+
+		expect(result).toEqual(true);
+	});
+
 });
