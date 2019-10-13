@@ -112,3 +112,11 @@ test('second empty must throw an Error', ()=>{
 
 
 
+test('minutes empty must throw an Error', ()=>{
+	var input = ':1';
+
+ 	expect(() => {
+ 		clockFormatToSeconds(input);
+ 	}).toThrow('Bad input');
+});
+
