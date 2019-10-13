@@ -1,3 +1,7 @@
+function startIsLowerThanEnd(start, end){
+	if (typeof start !== 'number' || typeof end !== 'number') return false;
+	return start < end;
+}
 
 function digitalClockToSeconds(time) {
 	if (typeof time !== 'string') throwBadInput();

@@ -25,15 +25,15 @@ var messageControl = {
     changeSkipOpening: function(data){
         sessionStorage.isSkipingOpening = toBool(data.isSkipingOpening);
         if (toBool(sessionStorage.isSkipingOpening)){
-            sessionStorage.openingStart = timeFormatToSeconds(data.openingStart);
-            sessionStorage.openingEnd = timeFormatToSeconds(data.openingEnd);
+            sessionStorage.openingStart = digitalClockToSeconds(data.openingStart);
+            sessionStorage.openingEnd = digitalClockToSeconds(data.openingEnd);
         }
     },
 
     changeSkipEnding: function(data){
         sessionStorage.isSkipingEnding = !toBool(sessionStorage.isSkipingEnding);
         if (toBool(sessionStorage.isSkipingEnding)){
-            sessionStorage.endingStart = timeFormatToSeconds(data.endingStart);
+            sessionStorage.endingStart = digitalClockToSeconds(data.endingStart);
             sessionStorage.endingEnd = videoPlayer.duration;
         }
     },
