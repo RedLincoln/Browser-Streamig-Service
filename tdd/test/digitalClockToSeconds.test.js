@@ -94,6 +94,14 @@ describe('digitalClockToSeconds must throw an Error when', () => {
 	 	}).toThrow('Bad input');
 	});
 
+	test('there is spaces between two values of a field', () => {
+	 	var input = '6 0';
+
+	 	expect(() => {
+	 		digitalClockToSeconds(input);
+	 	}).toThrow('Bad input');
+	});
+
 });
 
 describe("digitalClockToSeconds must calculate the right value when", () => {
