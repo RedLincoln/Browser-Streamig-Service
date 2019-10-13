@@ -68,9 +68,22 @@ function sendStreamingStatus(tabs) {
         streamingCB.checked = toBool(response.isStreaming);
         skipOpeningCB.checked = toBool(response.isSkipingOpening);
         skipEndingCB.checked = toBool(response.isSkipingEnding);
+        openingStart.value = toDigitalClock(response.openingStart);
+        openingEnd.value = toDigitalClock(response.openingEnd);
+        endingStart.value = toDigitalClock(response.endingStart);
     }
 }
 
+function toDigitalClock(seconds){
+    var minutesField = Math.floor(seconds / 60);
+    var secondsField = seconds - minutesField * 60;
+    return fillZerosUntilTwoDigits(minutesField) + ":" + fillZerosUntilTwoDigits(secondsField);
+}
+
+function fillZerosUntilTwoDigits(input){
+    if (input < 10) return "0" + input;
+    return input
+}
 
 function toBool(string){
     if (typeof string === 'boolean') return string;
