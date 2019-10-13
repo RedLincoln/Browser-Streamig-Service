@@ -1,3 +1,5 @@
+console.log("loading loadGlobalVariables.js")
+
 var SLEEP_TIME = 15000;
 var SLEEP_ONE_SECOND = 1000;
 var MESSAGE_TIME = 30;

@@ -1,3 +1,4 @@
+console.log('loading messageHandler.js')
 
 var messageControl = {
 
@@ -6,6 +7,7 @@ var messageControl = {
     },   
     
     onMessageListener: function(message, sender, sendResponse) {
+        console.log(message.data);
         if (messageControl.isSync(message.data.command)){
             var data = messageControl.extractSyncPropertiesFrom(sessionStorage);
             sendResponse(data);    

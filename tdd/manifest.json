@@ -10,7 +10,9 @@
     },
 
     "permissions": [
-      "activeTab"
+      "activeTab",
+      "<all_urls>",
+      "tabs"
     ],
 
     "browser_action": {
@@ -23,13 +25,9 @@
     "content_scripts": [
       {
         "matches": ["*://*.4anime.to/*episode*"],
-        "js": ["./content_scripts/loadGlobalVariables.js",
-               "./content_scripts/loadVideoButtonCss.js",
-               "./content_scripts/utils.js",
-               "./content_scripts/loadDefaultSessionData.js",
-               "./content_scripts/timeActionsMonitor.js",
-               "./content_scripts/messageHandler.js",
-               "./content_scripts/videoEndedControl.js"
+        "js": ["./content_scripts/src/loadGlobalVariables.js",
+               "./content_scripts/src/utils.js",
+               "./content_scripts/src/messageHandler.js"
               ],
         "all_frames": true
 

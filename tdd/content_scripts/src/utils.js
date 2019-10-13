@@ -1,3 +1,5 @@
+console.log('loading utils.js')
+
 function ErrorIfstartIsNotLowerThanEnd(start, end){
 	if (typeof start !== 'number' || typeof end !== 'number') return false;
 	if (end <= start){
@@ -27,6 +29,7 @@ function digitalClockToSeconds(time) {
 }
 
 function throwBadInput(){
+	console.error('Bad input expected([minutes:]seconds)');
 	throw new Error('Bad input expected([minutes:]seconds)');
 }
 
@@ -48,6 +51,8 @@ function toBool(input){
 	return false;
 }
 
+/*
 module.exports.digitalClockToSeconds = digitalClockToSeconds;
 module.exports.toBool = toBool;
 module.exports.ErrorIfstartIsNotLowerThanEnd = ErrorIfstartIsNotLowerThanEnd;
+*/

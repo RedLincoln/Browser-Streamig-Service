@@ -32,6 +32,12 @@ function loadSettings(){
 
 function onError(error) {
     console.error('Error: ' + error);
+    if (settings.command === 'opening'){
+        openingStart.style.backgroundColor = 'red';
+        openingEnd.style.backgroundColor = 'red';
+    }else if(settings.command === 'ending'){
+        endingStart.style.backgroundColor = 'red';
+    }
 }
 
 sendMessage();
