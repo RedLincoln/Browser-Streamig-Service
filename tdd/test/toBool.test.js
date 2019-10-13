@@ -19,3 +19,13 @@ describe("toBool must return true when", () => {
 	});
 
 });
+
+describe("toBool must return false when", () => {
+	test("input is boolean and false", () =>{
+		var input = false;
+
+		var result = toBool(input);
+
+		expect(result).toEqual(false);
+	});
+});
