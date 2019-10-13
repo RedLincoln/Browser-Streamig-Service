@@ -98,6 +98,14 @@ describe('digitalClockToSeconds must throw an Error when', () => {
 
 describe("digitalClockToSeconds must calculate the right value when", () => {
 
+	test('field have spaces before and after good value', () => {
+	 	var input = ' 1 ';
+
+	 	var result = digitalClockToSeconds(input);
+
+	 	expect(result).toBe(1);
+	});
+
 	test('field is a unit integer', () => {
 	 	var input = '1';
 
@@ -121,6 +129,8 @@ describe("digitalClockToSeconds must calculate the right value when", () => {
 	 	
 	 	expect(result).toBe(179);
 	});
+
+
 
 });
 

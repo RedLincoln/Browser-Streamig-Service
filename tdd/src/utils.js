@@ -24,11 +24,12 @@ function throwBadInput(){
 }
 
 function isValidField(field){
+	field = field.trim();
 	var value  =  parseInt(field);
 	var isString = typeof field === 'string';
 	var inRange = value >= 0 && value <= 59;
 	var inMaxLength = field.length < 3
-	var emptyField = field.trim().length === 0;
+	var emptyField = field.length === 0;
 
 	return ( inMaxLength && isString && !isNaN(field) && !emptyField && inRange );
 }
