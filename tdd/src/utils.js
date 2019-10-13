@@ -1,5 +1,5 @@
 
-function clockFormatToSeconds(time) {
+function digitalClockToSeconds(time) {
 	if (typeof time !== 'string') throwBadInput();
 	var fields = time.split(":");
 	if (fields.length > 2) throwBadInput();
@@ -33,4 +33,4 @@ function isValidField(field){
 	return ( inMaxLength && isString && !isNaN(field) && !emptyField && inRange );
 }
 
-module.exports = clockFormatToSeconds;
+module.exports = digitalClockToSeconds;
