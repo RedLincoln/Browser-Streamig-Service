@@ -102,3 +102,13 @@ test('must throw an Error wiht three or more fields', ()=>{
 });
 
 
+test('second empty must throw an Error', ()=>{
+	var input = '1:';
+
+ 	expect(() => {
+ 		clockFormatToSeconds(input);
+ 	}).toThrow('Bad input');
+});
+
+
+

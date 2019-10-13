@@ -20,7 +20,7 @@ function clockFormatToSeconds(time) {
 }
 
 function throwBadInput(){
-	throw new Error('Bad input');
+	throw new Error('Bad input expected([minutes:]seconds)');
 }
 
 function isValidField(field){
