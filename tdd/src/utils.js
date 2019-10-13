@@ -34,4 +34,10 @@ function isValidField(field){
 	return ( inMaxLength && isString && !isNaN(field) && !emptyField && inRange );
 }
 
-module.exports = digitalClockToSeconds;
+
+function toBool(input){
+
+}
+
+module.exports.digitalClockToSeconds = digitalClockToSeconds;
+module.exports.toBool = toBool;

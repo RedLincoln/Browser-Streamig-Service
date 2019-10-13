@@ -1,5 +1,5 @@
-var digitalClockToSeconds = require('../src/utils.js');
-
+var modules = require('../src/utils.js');
+var digitalClockToSeconds = modules.digitalClockToSeconds;
 
 describe('digitalClockToSeconds must throw an Error when', () => {
 	
@@ -111,7 +111,7 @@ describe("digitalClockToSeconds must calculate the right value when", () => {
 
 	 	var result = digitalClockToSeconds(input);
 
-	 	expect(result).toBe(1);
+	 	expect(result).toEqual(1);
 	});
 
 	test('field is a unit integer', () => {
@@ -119,7 +119,7 @@ describe("digitalClockToSeconds must calculate the right value when", () => {
 
 	 	var result = digitalClockToSeconds(input);
 
-	 	expect(result).toBe(1);
+	 	expect(result).toEqual(1);
 	});
 
 	test('field is a tens integer', () => {
@@ -127,7 +127,7 @@ describe("digitalClockToSeconds must calculate the right value when", () => {
 
 	 	var result = digitalClockToSeconds(input);
 
-	 	expect(result).toBe(10);
+	 	expect(result).toEqual(10);
 	});
 
 	test('minutes:seconds have proper format', () => {
@@ -135,7 +135,7 @@ describe("digitalClockToSeconds must calculate the right value when", () => {
 
 	 	var result = digitalClockToSeconds(input);
 	 	
-	 	expect(result).toBe(179);
+	 	expect(result).toEqual(179);
 	});
 
 
