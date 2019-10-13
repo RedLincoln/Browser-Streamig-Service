@@ -35,8 +35,10 @@ function onError(error) {
     if (settings.command === 'opening'){
         openingStart.style.backgroundColor = 'red';
         openingEnd.style.backgroundColor = 'red';
+        skipOpeningCB.checked = false;
     }else if(settings.command === 'ending'){
         endingStart.style.backgroundColor = 'red';
+        skipEndingCB.checked = false;
     }
 }
 
@@ -51,8 +53,13 @@ function sendStreamingStatus(tabs) {
                 data: settings
             }
         ).then(response => {
-            if (settings.command == "sync"){
+            if (settings.command === 'sync'){
                 syncContentAndBackground(response);             
+            }else if (settings.command === 'opening'){
+                openingStart.style.backgroundColor = 'white';
+                openingEnd.style.backgroundColor = 'white';
+            }else if (settings.command === 'ending'){
+                endingStart.style.backgroundColor = 'white';
             }
         }).catch(onError);
     });
@@ -66,8 +73,8 @@ function sendStreamingStatus(tabs) {
 
 
 function toBool(string){
-    if (typeof string === 'boolean') return string
-    if (typeof string === 'string') return string == "true"
+    if (typeof string === 'boolean') return string;
+    if (typeof string === 'string') return string == "true";
     return false;
 }
 

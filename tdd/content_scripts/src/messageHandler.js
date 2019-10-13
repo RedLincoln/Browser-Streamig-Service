@@ -7,7 +7,6 @@ var messageControl = {
     },   
     
     onMessageListener: function(message, sender, sendResponse) {
-        console.log(message.data);
         if (messageControl.isSync(message.data.command)){
             var data = messageControl.extractSyncPropertiesFrom(sessionStorage);
             sendResponse(data);    
@@ -29,16 +28,24 @@ var messageControl = {
         if (toBool(sessionStorage.isSkipingOpening)){
             var start = digitalClockToSeconds(data.openingStart);
             var end  = digitalClockToSeconds(data.openingEnd);
-            ErrorIfstartIsNotLowerThanEnd(start, end);
-            sessionStorage.openingStart = start;
-            sessionStorage.openingEnd = end;
+            openingTimeCheck(start, end);
         }
+    },
+
+    openingTimeCheck: function(start, end){
+        ErrorIfstartIsNotLowerThanEnd(start, end);
+        ErrorIfTimeIsNotInVideoRange(start);
+        ErrorIfTimeIsNotInVideoRange(end);
+        sessionStorage.openingStart = start;
+        sessionStorage.openingEnd = end;
     },
 
     changeSkipEnding: function(data){
         sessionStorage.isSkipingEnding = !toBool(sessionStorage.isSkipingEnding);
         if (toBool(sessionStorage.isSkipingEnding)){
-            sessionStorage.endingStart = digitalClockToSeconds(data.endingStart);
+            var start = digitalClockToSeconds(data.endingStart);
+            ErrorIfTimeIsNotInVideoRange(start);
+            sessionStorage.endingStart = start;
             sessionStorage.endingEnd = videoPlayer.duration;
         }
     },

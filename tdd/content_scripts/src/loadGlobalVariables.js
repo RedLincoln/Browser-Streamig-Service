@@ -13,6 +13,7 @@ var syncPorperties = ["isStreaming","isSkipingOpening", "isSkipingEnding", "open
                       "openingEnd", "endingStart"];
 
 var videoPlayer = document.getElementById('video1_html5_api');
+videoPlayer.load();
 var videoDiv = document.getElementById("video1");
 var video_button_div = document.createElement("div");
 var video_button = document.createElement("button");
