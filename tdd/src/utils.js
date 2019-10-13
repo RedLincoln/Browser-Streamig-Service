@@ -14,7 +14,7 @@ function clockFormatToSeconds(time) {
 	var i;
 	var value = 0;
 	for (i = 0; i < fields.length ; i++){
-		value += parseInt(fields[i] * ratios[i+baseIndex]);
+		value += fields[i] * ratios[i+baseIndex];
 	}
 	return value;
 }
@@ -24,9 +24,8 @@ function throwBadInput(){
 }
 
 function isValidField(field){
-	var value = parseInt(field);
 	var isString = typeof field === 'string';
-	var inRange = value >= 0 && value <= 60;
+	var inRange = field >= '0' && field <= '59';
 	var inMaxLength = field.length < 3
 	var emptyField = field.trim().length === 0;
 

@@ -68,8 +68,8 @@ test('field input must must be positive', () => {
  	}).toThrow('Bad input');
 });
 
-test('seconds input must must be less or equal to 60', () => {
- 	var input = '61';
+test('seconds input must must be lewer to 60', () => {
+ 	var input = '60';
 
  	expect(() => {
  		clockFormatToSeconds(input);
@@ -77,16 +77,16 @@ test('seconds input must must be less or equal to 60', () => {
 });
 
 test('minutes:seconds must be well calculated', () => {
- 	var input = '0:60';
+ 	var input = '2:59';
 
  	var result = clockFormatToSeconds(input);
  	
- 	expect(result).toBe(60);
+ 	expect(result).toBe(179);
 });
 
 
 test('minutes:seconds seperator must be a column', () => {
- 	var input = '0,60';
+ 	var input = '0,59';
 
  	expect(() => {
  		clockFormatToSeconds(input);
@@ -94,7 +94,7 @@ test('minutes:seconds seperator must be a column', () => {
 });
 
 test('must throw an Error wiht three or more fields', ()=>{
-	var input = '0:0:60';
+	var input = '0:0:50';
 
  	expect(() => {
  		clockFormatToSeconds(input);
