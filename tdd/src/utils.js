@@ -36,7 +36,7 @@ function isValidField(field){
 
 
 function toBool(input){
-
+	return input;
 }
 
 module.exports.digitalClockToSeconds = digitalClockToSeconds;
