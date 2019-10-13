@@ -28,4 +28,12 @@ describe("toBool must return false when", () => {
 
 		expect(result).toEqual(false);
 	});
+
+	test("input is string and not true", () =>{
+		var input = 'f';
+
+		var result = toBool(input);
+
+		expect(result).toEqual(false);
+	});
 });
