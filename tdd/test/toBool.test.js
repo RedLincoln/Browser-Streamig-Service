@@ -36,4 +36,12 @@ describe("toBool must return false when", () => {
 
 		expect(result).toEqual(false);
 	});
+
+	test("input is 0", () =>{
+		var input = 0;
+
+		var result = toBool(input);
+
+		expect(result).toEqual(false);
+	});
 });

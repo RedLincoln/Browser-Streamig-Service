@@ -36,8 +36,9 @@ function isValidField(field){
 
 
 function toBool(input){
-	if (typeof input === 'string') return input === 'true'
-	return input;
+	if (typeof input === 'string') return input === 'true';
+	if (typeof input === 'boolean') return input;
+	return false;
 }
 
 module.exports.digitalClockToSeconds = digitalClockToSeconds;
