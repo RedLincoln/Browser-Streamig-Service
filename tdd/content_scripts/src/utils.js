@@ -1,11 +1,15 @@
 console.log('loading utils.js')
 
 function ErrorIfstartIsNotLowerThanEnd(start, end){
-	if (typeof start !== 'number' || typeof end !== 'number') return false;
-	if (end <= start){
+	if (typeof start !== 'number' || typeof end !== 'number' || end <= start){
 		throwBadInput();
 	}
-	return true;
+}
+
+function ErrorIfTimeIsNotInVideoRange(time){
+	if (typeof time !== 'number' || time < 0 || time > videoPlayer.duration) {
+		throwBadInput();
+	}
 }
 
 function digitalClockToSeconds(time) {
