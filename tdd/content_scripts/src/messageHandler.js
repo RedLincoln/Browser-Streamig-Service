@@ -25,8 +25,11 @@ var messageControl = {
     changeSkipOpening: function(data){
         sessionStorage.isSkipingOpening = toBool(data.isSkipingOpening);
         if (toBool(sessionStorage.isSkipingOpening)){
-            sessionStorage.openingStart = digitalClockToSeconds(data.openingStart);
-            sessionStorage.openingEnd = digitalClockToSeconds(data.openingEnd);
+            var start = digitalClockToSeconds(data.openingStart);
+            var end  = digitalClockToSeconds(data.openingEnd);
+            ErrorIfstartIsNotLowerThanEnd(start, end);
+            sessionStorage.openingStart = start;
+            sessionStorage.openingEnd = end;
         }
     },
 

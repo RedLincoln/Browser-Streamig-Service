@@ -1,6 +1,9 @@
-function startIsLowerThanEnd(start, end){
+function ErrorIfstartIsNotLowerThanEnd(start, end){
 	if (typeof start !== 'number' || typeof end !== 'number') return false;
-	return start < end;
+	if (end <= start){
+		throwBadInput();
+	}
+	return true;
 }
 
 function digitalClockToSeconds(time) {
@@ -47,3 +50,4 @@ function toBool(input){
 
 module.exports.digitalClockToSeconds = digitalClockToSeconds;
 module.exports.toBool = toBool;
+module.exports.ErrorIfstartIsNotLowerThanEnd = ErrorIfstartIsNotLowerThanEnd;
